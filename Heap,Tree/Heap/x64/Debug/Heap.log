@@ -1,0 +1,3 @@
+﻿  Test.c
+D:\C++方向\数据结构\Tree\Heap,Tree\Heap\Test.c(92,11): warning C4133: “函数”: 从“FILE *”到“const char *const ”的类型不兼容
+  Heap.vcxproj -> D:\C++方向\数据结构\Tree\Heap,Tree\x64\Debug\Heap.exe
