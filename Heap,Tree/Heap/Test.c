@@ -143,7 +143,7 @@ BTNode* CreatBinaryTree()
 	BTNode* node4 = BuyNode(4);
 	BTNode* node5 = BuyNode(5);
 	BTNode* node6 = BuyNode(6);
-	BTNode* node7 = BuyNode(6);
+	BTNode* node7 = BuyNode(7);
 
 
 	node1->left = node2;
@@ -314,6 +314,76 @@ BTNode* TreeFind(BTNode* root, BTDataType x)
 //
 //	return TreeFind(root->right, x);
 //}
+//二叉树的销毁
+void TreeDestory(BTNode * root)
+{
+	if (root == NULL)
+		return;
+	TreeDestory(root->left);
+	TreeDestory(root->right);
+	free(root);
+}
+#include"Queue.h"
+//二叉树层序遍历
+void TreeLevelOrder(BTNode * root)
+{
+	Queue q;
+	//初始化
+	QueueInit(&q);
+	//入队
+	if (root)
+		QueuePush(&q,root);
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		printf("%d ", front->data);
+		if (front->left)
+			QueuePush(&q, front->left);
+		if (front->right)
+			QueuePush(&q, front->right);
+	}
+	QueueDestroy(&q);
+}
+//判断是否为完全二叉树
+bool TreeComplete(BTNode* root)
+{
+	Queue q;
+	QueueInit(&q);
+	if (root)
+		QueuePush(&q, root);
+
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+
+		// 遇到第一个空，就可以开始判断，如果队列中还有非空，就不是完全二叉树
+		if (front == NULL)
+		{
+			break;
+		}
+
+		QueuePush(&q, front->left);
+		QueuePush(&q, front->right);
+	}
+
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+
+		// 如果有非空，就不是完全二叉树
+		if (front)
+		{
+			QueueDestroy(&q);
+			return false;
+		}
+	}
+
+	QueueDestroy(&q);
+	return true;
+}
 int main()
 {
 	/*BTNode* root1 = CreatBinaryTree();
@@ -336,5 +406,9 @@ int main()
 	printf("TreeLeafsize:%d\n", TreeLeafsize(root));
 	printf("TreeHeight:%d\n", TreeHeight(root));
 	printf("TreeLevelKSize:%d\n", TreeLevelKSize(root,2));
+	TreeLevelOrder(root);
+	printf("\n");
+	TreeDestory(root);
+	root = NULL;
 	return 0;
 }
