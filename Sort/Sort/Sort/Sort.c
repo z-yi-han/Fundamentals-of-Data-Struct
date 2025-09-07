@@ -64,3 +64,75 @@ void ShellSort(int* a, int n)
 		}
 	}
 }
+void AdjustDown(int* a, int n, int parent)
+{
+	// 先假设左孩子小
+	int child = parent * 2 + 1;
+
+	while (child < n)  // child >= n说明孩子不存在，调整到叶子了
+	{
+		// 找出小的那个孩子
+		if (child + 1 < n && a[child + 1] > a[child])
+		{
+			++child;
+		}
+
+		if (a[child] > a[parent])
+		{
+			Swap(&a[child], &a[parent]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+void HeapSort(int* a, int n)
+{
+	// 向下调整建堆 O(N)
+	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
+	{
+		AdjustDown(a, n, i);
+	}
+
+	// O(N*logN)
+	int end = n - 1;
+	while (end > 0)
+	{
+		Swap(&a[0], &a[end]);
+		AdjustDown(a, end, 0);
+		--end;
+	}
+}
+void SelectSort(int* a, int n)
+{
+	int begin = 0, end = n - 1;
+
+	while (begin < end)
+	{
+		int mini = begin, maxi = begin;
+		for (int i = begin + 1; i <= end; ++i)
+		{
+			if (a[i] > a[maxi])
+			{
+				maxi = i;
+			}
+
+			if (a[i] < a[mini])
+			{
+				mini = i;
+			}
+		}
+
+		Swap(&a[begin], &a[mini]);
+		if (begin == maxi)
+			maxi = mini;
+
+		Swap(&a[end], &a[maxi]);
+		++begin;
+		--end;
+	}
+}

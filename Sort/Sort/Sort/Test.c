@@ -17,7 +17,7 @@ void TestShellSort()
 }
 int main()
 {
-	TestInsertSort();
+	//TestInsertSort();
 	TestShellSort();
 	return 0;
 }
