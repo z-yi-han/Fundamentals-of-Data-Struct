@@ -1,2 +1,5 @@
-﻿  Test.c
+﻿  Sort.c
+  Test.c
+  正在生成代码...
+D:\C++方向\数据结构\Sort\Sort\Sort\Sort.c(216,1): warning C4715: “PartSort1”: 不是所有的控件路径都返回值
   Sort.vcxproj -> D:\C++方向\数据结构\Sort\Sort\x64\Debug\Sort.exe

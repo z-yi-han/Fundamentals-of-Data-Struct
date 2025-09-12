@@ -150,30 +150,182 @@ void BubbleSort(int* a, int n)
 		}
 	}
 }
-void QuickSort(int* a, int left, int right)//left,right是下标
+int GetMidi(int* a, int left, int right)
 {
-	int keyi = left;
-	int begin = left, end = right;
-	while (begin < end)
-	{
-		// 右边找小
-		while (begin < end && a[end] >= a[keyi])
-		{
-			--end;
-		}
-
-		// 左边找大
-		while (begin < end && a[begin] <= a[keyi])
-		{
-			++begin;
-		}
-
-		Swap(&a[begin], &a[end]);
-	}
-	Swap(&a[keyi], &a[begin]);
-	keyi = begin;
-	// [left, keyi-1] keyi [keyi+1, right]
-	QuickSort(a, left, keyi - 1);
-	QuickSort(a, keyi + 1, right);
-
+	int midi = (left + right) / 2;
+	//left midi right
+	//if (a[left] < a[midi])
+	//{
+	//	if (a[midi] < a[right]) return midi;//left<midi<right
+	//	else
+	//		if (a[right]>a[left])//midi>right,midi>left
+	//	{
+	//		return right;
+	//	}
+	//	else {
+	//		return left;
+	//	}
+	//}
+	//else {//left>midi
+	//	if (a[midi] > a[right]) return midi;
+	//	else//left>midi right>midi
+	//		if (a[left] > a[right])
+	//			return right;
+	//		else
+	//			return left;
+	//}
+	if (a[left] > a[midi]) Swap(&a[left], &a[midi]);
+	if (a[left] > a[right]) Swap(&a[left], &a[right]);
+	if (a[midi] > a[right]) Swap(&a[midi], &a[right]);
+	return midi; // 此时 a[mid] 一定是中位数
 }
+// hoare
+int PartSort1(int* a, int left, int right)
+{
+	// 小区间优化，不再递归分割排序，减少递归的次数
+	if ((right - left + 1) < 10)
+	{
+		InsertSort(a + left, right - left + 1);
+	}
+	else {
+		// 三数取中
+		int midi = GetMidi(a, left, right);
+		Swap(&a[left], &a[midi]);
+
+		int keyi = left;
+		int begin = left, end = right;
+		while (begin < end)
+		{
+			// 右边找小
+			while (begin < end && a[end] >= a[keyi])
+			{
+				--end;
+			}
+
+			// 左边找大
+			while (begin < end && a[begin] <= a[keyi])
+			{
+				++begin;
+			}
+
+			Swap(&a[begin], &a[end]);
+		}
+		Swap(&a[keyi], &a[begin]);
+		return begin;
+	}
+}
+//挖坑
+int PartSort2(int* a, int left, int right)
+{
+	// 小区间优化
+	if ((right - left + 1) < 10)
+	{
+		InsertSort(a + left, right - left + 1);
+	}
+	else
+	{
+		// 三数取中
+		int midi = GetMidi(a, left, right);
+		Swap(&a[left], &a[midi]);
+
+		// 挖坑，保存基准值
+		int pivot = a[left];
+		int begin = left;
+		int end = right;
+
+		while (begin < end)
+		{
+			// 从右往左找小于 pivot 的数
+			while (begin < end && a[end] >= pivot)
+			{
+				--end;
+			}
+			if (begin < end)
+			{
+				a[begin] = a[end]; // 把小的填到左边的坑
+				++begin;
+			}
+
+			// 从左往右找大于 pivot 的数
+			while (begin < end && a[begin] <= pivot)
+			{
+				++begin;
+			}
+			if (begin < end)
+			{
+				a[end] = a[begin]; // 把大的填到右边的坑
+				--end;
+			}
+		}
+
+		// 最后把 pivot 填回去
+		a[begin] = pivot;
+		return begin;
+	}
+}
+//前后指针法
+int PartSort3(int* a, int left, int right)
+{
+	// 小区间优化
+	if ((right - left + 1) < 10)
+	{
+		InsertSort(a + left, right - left + 1);
+	}
+	// 三数取中
+	int midi = GetMidi(a, left, right);
+	Swap(&a[left], &a[midi]);
+	int keyi = left;
+	//单趟
+	int prev = left;
+	int cur = prev + 1;
+	while (cur <= right)
+	{
+		if (a[cur] < a[keyi] && ++prev != cur)
+			Swap(&a[prev], &a[cur]);
+		cur++;
+	}
+
+	Swap(&a[prev], &a[keyi]);
+	return prev;
+}
+void QuickSort(int* a, int left, int right)
+	{
+		if (left >= right)
+			return;
+
+		int keyi = PartSort1(a, left, right);
+		//int keyi = PartSort2(a, left, right);
+		// int keyi = PartSort3(a, left, right);
+		// [left, keyi-1] keyi [keyi+1, right]
+		QuickSort(a, left, keyi - 1);
+		QuickSort(a, keyi + 1, right);
+	}
+#include"Stack.h"
+void QuickSortNonr(int* a, int left, int right)
+{
+	ST st;
+	STInit(&st);
+	STPush(&st, right);
+	STPush(&st, left);
+	while (!STEmpty(&st))
+	{
+		int begin = STTop(&st);
+		STPop(&st);
+		int end = STTop(&st);
+		STPop(&st);
+		int keyi = PartSort3(a, begin, end);
+		//[begin,key-1]  keyi [keti+1,right]
+		if (keyi + 1 < end)
+		{
+			STPush(&st, end);
+			STPush(&st, keyi + 1);
+		}
+		if (begin < keyi - 1)
+		{
+			STPush(&st,keyi-1);
+			STPush(&st,begin);
+		}
+	}
+	STDestroy(&st);
+}
+
