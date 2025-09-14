@@ -1,5 +1,4 @@
-﻿  Sort.c
-  Test.c
-  正在生成代码...
-D:\C++方向\数据结构\Sort\Sort\Sort\Sort.c(216,1): warning C4715: “PartSort1”: 不是所有的控件路径都返回值
+﻿  Test.c
+D:\C++方向\数据结构\Sort\Sort\Sort\Test.c(47,2): warning C4013: “MergeSortNonR”未定义；假设外部返回 int
+D:\C++方向\数据结构\Sort\Sort\Sort\Test.c(53,8): warning C4244: “函数”: 从“time_t”转换到“unsigned int”，可能丢失数据
   Sort.vcxproj -> D:\C++方向\数据结构\Sort\Sort\x64\Debug\Sort.exe

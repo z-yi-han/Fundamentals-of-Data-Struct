@@ -11,4 +11,4 @@ void QuickSort(int* a, int left, int right);//快速排序
 void QuickSortNonr(int* a, int left, int right);//非递归快速排序
 void SelectSort(int* a, int n);//选择排序
 void MergeSort(int *a,int n);//归并排序
-void MergeSortNinr(int* a, int n);//非递归归并排序
+void MergeSortNonr(int* a, int n);//非递归归并排序
