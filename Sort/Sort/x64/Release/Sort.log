@@ -1,8 +1,7 @@
-﻿  Test.c
-D:\C++方向\数据结构\Sort\Sort\Sort\Test.c(68,8): warning C4244: “函数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+﻿  Sort.c
   正在生成代码
-  16 of 26 functions (61.5%) were compiled, the rest were copied from previous compilation.
+  2 of 17 functions (11.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   Sort.vcxproj -> D:\C++方向\数据结构\Sort\Sort\x64\Release\Sort.exe

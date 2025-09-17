@@ -77,10 +77,9 @@ void TestOP()
 
 	for (int i = 0; i < N; ++i)
 	{
-		// ÖØ¸´²»¶à
+
 		a1[i] = rand() + i;
 
-		// ÖØ¸´½Ï¶à
 		//a1[i] = rand();
 		a2[i] = a1[i];
 		a3[i] = a1[i];
@@ -139,12 +138,12 @@ void TestOP()
 
 int main()
 {
-	/*TestInsertSort();
-	TestShellSort();
-	TestSelectSort();
-	TestQuickSort();
-	TestMergeSort();
-	TestCountSort();*/
+	//TestInsertSort();
+	//TestShellSort();
+	//TestSelectSort();
+	//TestQuickSort();
+	//TestMergeSort();
+	//TestCountSort();
 
 	TestOP();
 

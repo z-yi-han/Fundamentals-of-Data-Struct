@@ -9,7 +9,7 @@ void PrintArray(int* a, int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		printf("%d ",a[i]);
+		printf("%d ", a[i]);
 	}
 	printf("\n");
 }
@@ -114,7 +114,7 @@ void SelectSort(int* a, int n)
 	{
 		int mini = begin;
 		int maxi = begin;
-		for (int i = begin+1; i<=end ;++i)
+		for (int i = begin + 1; i <= end; ++i)
 		{
 			if (a[i] > a[maxi])
 				maxi = i;
@@ -266,11 +266,6 @@ int PartSort2(int* a, int left, int right)
 //前后指针法
 int PartSort3(int* a, int left, int right)
 {
-	// 小区间优化
-	if ((right - left + 1) < 10)
-	{
-		InsertSort(a + left, right - left + 1);
-	}
 	// 三数取中
 	int midi = GetMidi(a, left, right);
 	Swap(&a[left], &a[midi]);
@@ -289,17 +284,22 @@ int PartSort3(int* a, int left, int right)
 	return prev;
 }
 void QuickSort(int* a, int left, int right)
+{
+	if (left >= right)
+		return;
+	// 小区间优化
+	if ((right - left + 1) < 10)
 	{
-		if (left >= right)
-			return;
-
-		int keyi = PartSort1(a, left, right);
-		//int keyi = PartSort2(a, left, right);
-		// int keyi = PartSort3(a, left, right);
-		// [left, keyi-1] keyi [keyi+1, right]
-		QuickSort(a, left, keyi - 1);
-		QuickSort(a, keyi + 1, right);
+		InsertSort(a + left, right - left + 1);
+		return;
 	}
+	int keyi = PartSort1(a, left, right);
+	//int keyi = PartSort2(a, left, right);
+	// int keyi = PartSort3(a, left, right);
+	// [left, keyi-1] keyi [keyi+1, right]
+	QuickSort(a, left, keyi - 1);
+	QuickSort(a, keyi + 1, right);
+}
 #include"Stack.h"
 void QuickSortNonR(int* a, int left, int right)
 {
@@ -322,8 +322,8 @@ void QuickSortNonR(int* a, int left, int right)
 		}
 		if (begin < keyi - 1)
 		{
-			STPush(&st,keyi-1);
-			STPush(&st,begin);
+			STPush(&st, keyi - 1);
+			STPush(&st, begin);
 		}
 	}
 	STDestroy(&st);
@@ -345,7 +345,7 @@ void _MergeSort(int* a, int* tmp, int begin, int end)
 	{
 		if (a[begin1] < a[begin2])
 		{
-			tmp[i++] = a[begin1++]; 
+			tmp[i++] = a[begin1++];
 		}
 		else
 		{
