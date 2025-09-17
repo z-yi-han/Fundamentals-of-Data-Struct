@@ -1,4 +1,5 @@
 ﻿#include"Sort.h"
+
 void TestInsertSort()
 {
 	int a[] = { 2,4,1,7,8,3,9,2 };
@@ -31,7 +32,12 @@ void TestSelectSort()
 
 void TestQuickSort()
 {
-	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
+	//int a[] = { 6,1,2,7,9,3,4,5,10,8 };
+
+	int a[] = { 6,1,6,7,6,6,4,9 };
+	/*int a[] = { 2,2,2,2,2,2,2,2 };
+	int a[] = { 3,2,3,3,2,3,2,3 };
+	int a[] = { 2,3,3,3,2,3,2,3 };*/
 
 	PrintArray(a, sizeof(a) / sizeof(int));
 	QuickSort(a, 0, sizeof(a) / sizeof(int) - 1);
@@ -48,10 +54,19 @@ void TestMergeSort()
 	PrintArray(a, sizeof(a) / sizeof(int));
 }
 
+void TestCountSort()
+{
+	int a[] = { 6,1,2,9,4,2,4,1,4,-5,-5,-3,6 };
+
+	PrintArray(a, sizeof(a) / sizeof(int));
+	CountSort(a, sizeof(a) / sizeof(int));
+	PrintArray(a, sizeof(a) / sizeof(int));
+}
+
 void TestOP()
 {
 	srand(time(0));
-	const int N = 1000000;
+	const int N = 10000000;
 	int* a1 = (int*)malloc(sizeof(int) * N);
 	int* a2 = (int*)malloc(sizeof(int) * N);
 	int* a3 = (int*)malloc(sizeof(int) * N);
@@ -62,7 +77,10 @@ void TestOP()
 
 	for (int i = 0; i < N; ++i)
 	{
+		// ÖØ¸´²»¶à
 		a1[i] = rand() + i;
+
+		// ÖØ¸´½Ï¶à
 		//a1[i] = rand();
 		a2[i] = a1[i];
 		a3[i] = a1[i];
@@ -98,15 +116,17 @@ void TestOP()
 
 	int begin7 = clock();
 	//BubbleSort(a7, N);
+	CountSort(a7, N);
 	int end7 = clock();
 
 	printf("InsertSort:%d\n", end1 - begin1);
 	printf("ShellSort:%d\n", end2 - begin2);
 	printf("SelectSort:%d\n", end3 - begin3);
+
 	printf("HeapSort:%d\n", end4 - begin4);
 	printf("QuickSort:%d\n", end5 - begin5);
 	printf("MergeSort:%d\n", end6 - begin6);
-	printf("BubbleSort:%d\n", end7 - begin7);
+	printf("CountSort:%d\n", end7 - begin7);
 
 	free(a1);
 	free(a2);
@@ -117,16 +137,17 @@ void TestOP()
 	free(a7);
 }
 
-
 int main()
 {
-	//TestInsertSort();
-	//TestShellSort();
-	//TestSelectSort();
-	//TestQuickSort();
+	/*TestInsertSort();
+	TestShellSort();
+	TestSelectSort();
+	TestQuickSort();
 	TestMergeSort();
+	TestCountSort();*/
 
-	//TestOP();
+	TestOP();
+
 
 	return 0;
 }

@@ -301,7 +301,7 @@ void QuickSort(int* a, int left, int right)
 		QuickSort(a, keyi + 1, right);
 	}
 #include"Stack.h"
-void QuickSortNonr(int* a, int left, int right)
+void QuickSortNonR(int* a, int left, int right)
 {
 	ST st;
 	STInit(&st);
@@ -441,4 +441,46 @@ void MergeSortNonR(int* a, int n)
 
 	free(tmp);
 	tmp = NULL;
+}
+// 时间复杂度:O(N+range)
+// 只适合整数/适合范围集中
+// 空间范围度：O(range)
+void CountSort(int* a, int n)
+{
+	int min = a[0], max = a[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (a[i] < min)
+			min = a[i];
+
+		if (a[i] > max)
+			max = a[i];
+	}
+
+	int range = max - min + 1;
+	//printf("%d\n", range);
+
+	int* count = (int*)calloc(range, sizeof(int));
+	if (count == NULL)
+	{
+		perror("calloc fail");
+		return;
+	}
+
+	// 统计次数
+	for (int i = 0; i < n; i++)
+	{
+		count[a[i] - min]++;
+	}
+
+	// 排序
+	int j = 0;
+	for (int i = 0; i < range; i++)
+	{
+		while (count[i]--)
+		{
+			a[j++] = i + min;
+		}
+	}
+	free(count);
 }
